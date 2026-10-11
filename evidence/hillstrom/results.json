@@ -1,0 +1,212 @@
+{
+  "data": "data/hillstrom.csv",
+  "customers": 64000,
+  "experiment_checks": {
+    "arm_sizes": {
+      "No E-Mail": 21306,
+      "Mens E-Mail": 21307,
+      "Womens E-Mail": 21387
+    },
+    "sample_ratio_mismatch_p": 0.9036929575604196,
+    "standardised_mean_differences": {
+      "Mens E-Mail": {
+        "recency": 0.006831532454259954,
+        "history": 0.00761286832154239,
+        "mens": -0.0045823256374879625,
+        "womens": 0.007588929691887142,
+        "newbie": -0.0008918953696535328
+      },
+      "Womens E-Mail": {
+        "recency": 0.005180013205688683,
+        "history": 0.006510722458553667,
+        "mens": -0.008630731202832915,
+        "womens": 0.004946313992582152,
+        "newbie": 0.0025567009140795606
+      }
+    },
+    "worst_abs_smd": 0.008630731202832915,
+    "balanced": true
+  },
+  "effects": {
+    "Mens E-Mail": {
+      "visit": {
+        "control_mean": 0.10616727682343002,
+        "treatment_mean": 0.18275684047496127,
+        "difference": 0.07658956365153125,
+        "ci_low": 0.06995350121810838,
+        "ci_high": 0.08322562608495411,
+        "relative_lift": 0.721404616781399,
+        "p_value": 5.685165482802317e-112,
+        "p_value_holm": 3.41109928968139e-111
+      },
+      "conversion": {
+        "control_mean": 0.005726086548390125,
+        "treatment_mean": 0.01253109306800582,
+        "difference": 0.006805006519615695,
+        "ci_low": 0.005000171380452313,
+        "ci_high": 0.008609841658779076,
+        "relative_lift": 1.188421876286328,
+        "p_value": 1.5232235005955427e-13,
+        "p_value_holm": 6.092894002382171e-13
+      },
+      "spend": {
+        "control_mean": 0.6527893551112361,
+        "treatment_mean": 1.422616511005773,
+        "difference": 0.7698271558945368,
+        "ci_low": 0.4854233342055775,
+        "ci_high": 1.0343371621710507,
+        "relative_lift": 1.1792887703620063,
+        "p_value": 1.163814968225482e-07,
+        "p_value_holm": 3.491444904676446e-07
+      }
+    },
+    "Womens E-Mail": {
+      "visit": {
+        "control_mean": 0.10616727682343002,
+        "treatment_mean": 0.151400383410483,
+        "difference": 0.045233106587052985,
+        "ci_low": 0.03889382581264261,
+        "ci_high": 0.05157238736146336,
+        "relative_lift": 0.4260550702669102,
+        "p_value": 3.1824031593349214e-44,
+        "p_value_holm": 1.5912015796674606e-43
+      },
+      "conversion": {
+        "control_mean": 0.005726086548390125,
+        "treatment_mean": 0.008837144059475383,
+        "difference": 0.003111057511085258,
+        "ci_low": 0.0014986778214022348,
+        "ci_high": 0.004723437200768281,
+        "relative_lift": 0.5433130436982172,
+        "p_value": 0.00015710512910668448,
+        "p_value_holm": 0.00031421025821336897
+      },
+      "spend": {
+        "control_mean": 0.6527893551112361,
+        "treatment_mean": 1.0772015710478329,
+        "difference": 0.4244122159365967,
+        "ci_low": 0.17320781785334372,
+        "ci_high": 0.6792675174958633,
+        "relative_lift": 0.6501518638646863,
+        "p_value": 0.0011293971023632495,
+        "p_value_holm": 0.0011293971023632495
+      }
+    }
+  },
+  "power": {
+    "control_conversion": 0.005726086548390125,
+    "customers_per_arm": 21306,
+    "minimum_detectable_absolute_lift": 0.0022379649228843586,
+    "minimum_detectable_relative_lift": 0.39083672661454216
+  },
+  "uplift": {
+    "Mens E-Mail": {
+      "arm": "Mens E-Mail",
+      "test_customers": 21307,
+      "models": {
+        "logistic T-learner": {
+          "qini_coefficient_test": -0.07347339154855148,
+          "qini_permutation_p": 0.8991008991008991,
+          "targeting": [
+            {
+              "share_targeted": 0.1,
+              "uplift_in_targeted": 0.0057453736432085956,
+              "uplift_overall": 0.006851349156509444,
+              "ratio_to_average": 0.8385755143933856
+            },
+            {
+              "share_targeted": 0.3,
+              "uplift_in_targeted": 0.006104282230600387,
+              "uplift_overall": 0.006851349156509444,
+              "ratio_to_average": 0.8909606109915926
+            },
+            {
+              "share_targeted": 0.5,
+              "uplift_in_targeted": 0.004811793577713469,
+              "uplift_overall": 0.006851349156509444,
+              "ratio_to_average": 0.7023132915568607
+            }
+          ]
+        },
+        "gradient boosting T-learner": {
+          "qini_coefficient_test": -0.024091552075077856,
+          "qini_permutation_p": 0.6643356643356644,
+          "targeting": [
+            {
+              "share_targeted": 0.1,
+              "uplift_in_targeted": 0.001465314430219137,
+              "uplift_overall": 0.006851349156509444,
+              "ratio_to_average": 0.213872391662735
+            },
+            {
+              "share_targeted": 0.3,
+              "uplift_in_targeted": 0.006982979391489657,
+              "uplift_overall": 0.006851349156509444,
+              "ratio_to_average": 1.019212308696186
+            },
+            {
+              "share_targeted": 0.5,
+              "uplift_in_targeted": 0.0058865147451495825,
+              "uplift_overall": 0.006851349156509444,
+              "ratio_to_average": 0.8591759974102071
+            }
+          ]
+        }
+      }
+    },
+    "Womens E-Mail": {
+      "arm": "Womens E-Mail",
+      "test_customers": 21347,
+      "models": {
+        "logistic T-learner": {
+          "qini_coefficient_test": 0.16753420030864374,
+          "qini_permutation_p": 0.052947052947052944,
+          "targeting": [
+            {
+              "share_targeted": 0.1,
+              "uplift_in_targeted": 0.009729078529820329,
+              "uplift_overall": 0.003157399518563307,
+              "ratio_to_average": 3.08135808364451
+            },
+            {
+              "share_targeted": 0.3,
+              "uplift_in_targeted": 0.0050895972342143115,
+              "uplift_overall": 0.003157399518563307,
+              "ratio_to_average": 1.611958576762627
+            },
+            {
+              "share_targeted": 0.5,
+              "uplift_in_targeted": 0.004887687538552635,
+              "uplift_overall": 0.003157399518563307,
+              "ratio_to_average": 1.5480104781851145
+            }
+          ]
+        },
+        "gradient boosting T-learner": {
+          "qini_coefficient_test": 0.1756329960481548,
+          "qini_permutation_p": 0.04195804195804196,
+          "targeting": [
+            {
+              "share_targeted": 0.1,
+              "uplift_in_targeted": 0.0034234129847421114,
+              "uplift_overall": 0.003157399518563307,
+              "ratio_to_average": 1.0842508097612706
+            },
+            {
+              "share_targeted": 0.3,
+              "uplift_in_targeted": 0.005554241389672893,
+              "uplift_overall": 0.003157399518563307,
+              "ratio_to_average": 1.7591189702214836
+            },
+            {
+              "share_targeted": 0.5,
+              "uplift_in_targeted": 0.0037448960046016716,
+              "uplift_overall": 0.003157399518563307,
+              "ratio_to_average": 1.18606973320427
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -22,8 +22,13 @@ From `evidence/synthetic_check/RESULTS.md`: the randomisation checks pass
 (sample-ratio p = 0.611, largest |SMD| 0.010); the men's lift is estimated at
 +0.44 points (CI 0.27 to 0.62) and the women's average lift at +0.51 points
 (CI 0.33 to 0.69) against about +0.6 planted; uplift models find no segment
-for the men's e-mail (Qini −0.066 and 0.019) and find the planted one for the
-women's e-mail (Qini 0.171 and 0.182, 1.12–1.44 points among the top 10%).
+for the men's e-mail (Qini −0.066 and 0.019, permutation p 0.775 and 0.398)
+and find the planted one for the women's e-mail (Qini 0.171 and 0.182,
+permutation p 0.008 and 0.005, 1.12–1.44 points among the top 10%).
+
+This gave the yardstick for the real data. There the women's e-mail models
+reach p of only 0.04–0.05, so the real result is reported as inconclusive
+rather than as a found segment.
 
 ## Consequences
 

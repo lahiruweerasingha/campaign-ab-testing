@@ -23,6 +23,19 @@ cannot be scored row by row the way a classifier can.
   (incremental conversions when targeting the highest predicted uplift first),
   its coefficient relative to random targeting, and the **measured** effect
   (treated rate minus control rate) among the top 10%, 30% and 50%.
+- A **permutation test** of the Qini coefficient: the share of 1,000 random
+  rankings of the same held-out customers that score at least as high. Added
+  after the first real-data run, where a Qini of 0.18 looked convincing on
+  its own but rested on about 34 incremental conversions.
+
+## Result
+
+On the Hillstrom data the men's e-mail models do no better than random
+(Qini p 0.899 and 0.664). The women's e-mail models reach Qini p 0.053
+(logistic) and 0.042 (gradient boosting), and disagree about the top 10%
+(0.97% vs 0.34% uplift). On synthetic data of the same size with a real
+segment, the same models reach p 0.008 and 0.005. The conclusion reported is
+that this experiment cannot say reliably whom to target.
 
 ## Consequences
 
