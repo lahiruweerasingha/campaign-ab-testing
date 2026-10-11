@@ -1,0 +1,11 @@
+name: campaign-ab-testing
+
+services:
+  analysis:
+    image: campaign-ab-testing:0.1.0
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    volumes:
+      - ./:/app
+    command: ["python", "--version"]
