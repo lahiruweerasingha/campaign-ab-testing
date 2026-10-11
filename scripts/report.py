@@ -60,15 +60,20 @@ def main(folder: str) -> None:
         "",
         "## 4. For whom? Uplift on the held-out half",
         "",
-        "| E-mail | Model | Qini coefficient | Uplift if top 10% targeted | top 30% | top 50% "
-        "| Average uplift |",
-        "|---|---|---:|---:|---:|---:|---:|",
+        "Qini p: the share of 1,000 random rankings of the same held-out customers",
+        "that reach at least the model's Qini coefficient. A large p means the curve",
+        "is above the random line by no more than chance would put it there.",
+        "",
+        "| E-mail | Model | Qini coefficient | Qini p | Uplift if top 10% targeted "
+        "| top 30% | top 50% | Average uplift |",
+        "|---|---|---:|---:|---:|---:|---:|---:|",
     ]
     for arm, u in r["uplift"].items():
         for model, m in u["models"].items():
             t = {round(x["share_targeted"], 2): x for x in m["targeting"]}
             lines.append(
                 f"| {arm} | {model} | {m['qini_coefficient_test']:.3f} | "
+                f"{m['qini_permutation_p']:.3f} | "
                 f"{pct(t[0.1]['uplift_in_targeted'])} | {pct(t[0.3]['uplift_in_targeted'])} | "
                 f"{pct(t[0.5]['uplift_in_targeted'])} | {pct(t[0.1]['uplift_overall'])} |"
             )

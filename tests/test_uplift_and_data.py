@@ -32,6 +32,19 @@ def test_oracle_beats_random_and_random_is_near_zero():
     assert abs(u.qini_coefficient(rng.random(len(y)), t, y)) < 0.2
 
 
+def test_permutation_p_separates_a_real_segment_from_noise():
+    df = d.synthetic(40_000, seed=1)
+    treated = (df["segment"] == "Womens E-Mail").to_numpy()
+    keep = treated | (df["segment"] == "No E-Mail").to_numpy()
+    y, t = df["conversion"].to_numpy()[keep], treated[keep]
+    oracle = df["womens"].to_numpy()[keep].astype(float)
+    noise = np.random.default_rng(5).random(len(y))
+    assert u.qini_permutation_p(oracle, t, y, n=200) < 0.01
+    assert u.qini_permutation_p(noise, t, y, n=200) > 0.05
+    # never exactly 0: the observed ranking counts as one of the orderings
+    assert u.qini_permutation_p(oracle, t, y, n=200) >= 1 / 201
+
+
 def test_t_learner_finds_the_planted_segment():
     df = d.synthetic(60_000, seed=2)
     arm = df[df["segment"].isin(["Womens E-Mail", "No E-Mail"])]

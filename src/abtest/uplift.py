@@ -73,6 +73,24 @@ def qini_coefficient(scores: np.ndarray, treated: np.ndarray, y: np.ndarray) -> 
     return float(area / abs(gain[-1])) if gain[-1] else float("nan")
 
 
+def qini_permutation_p(
+    scores: np.ndarray, treated: np.ndarray, y: np.ndarray, n: int = 1000, seed: int = 7
+) -> float:
+    """How often a random ranking of the same customers scores at least this Qini.
+
+    A Qini curve on a few hundred conversions wanders well away from the
+    random-targeting line by chance alone. Shuffling the scores keeps the
+    customers, their arms and their outcomes, and breaks only the link between
+    score and customer, so the shuffled coefficients show what chance produces.
+    Returns a one-sided p-value with the usual +1 correction.
+    """
+    observed = qini_coefficient(scores, treated, y)
+    rng = np.random.default_rng(seed)
+    scores = np.asarray(scores)
+    hits = sum(qini_coefficient(rng.permutation(scores), treated, y) >= observed for _ in range(n))
+    return (hits + 1) / (n + 1)
+
+
 def targeting_value(
     scores: np.ndarray, treated: np.ndarray, y: np.ndarray, share: float
 ) -> dict[str, float]:

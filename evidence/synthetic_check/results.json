@@ -106,6 +106,7 @@
       "models": {
         "logistic T-learner": {
           "qini_coefficient_test": -0.06558768098916078,
+          "qini_permutation_p": 0.7752247752247752,
           "targeting": [
             {
               "share_targeted": 0.1,
@@ -129,6 +130,7 @@
         },
         "gradient boosting T-learner": {
           "qini_coefficient_test": 0.01856246844144419,
+          "qini_permutation_p": 0.39760239760239763,
           "targeting": [
             {
               "share_targeted": 0.1,
@@ -158,6 +160,7 @@
       "models": {
         "logistic T-learner": {
           "qini_coefficient_test": 0.17056870050949188,
+          "qini_permutation_p": 0.007992007992007992,
           "targeting": [
             {
               "share_targeted": 0.1,
@@ -181,6 +184,7 @@
         },
         "gradient boosting T-learner": {
           "qini_coefficient_test": 0.1817136610825712,
+          "qini_permutation_p": 0.004995004995004995,
           "targeting": [
             {
               "share_targeted": 0.1,

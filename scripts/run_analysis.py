@@ -114,6 +114,9 @@ def uplift(df, arm: str, seed: int = 7) -> tuple[dict, dict]:
         scores = model.predict_uplift(X[idx_test])
         result[name] = {
             "qini_coefficient_test": u.qini_coefficient(scores, t[idx_test], y[idx_test]),
+            # Share of 1,000 random rankings of the same customers that score at
+            # least as high: is the curve above random by more than chance?
+            "qini_permutation_p": u.qini_permutation_p(scores, t[idx_test], y[idx_test]),
             "targeting": [
                 u.targeting_value(scores, t[idx_test], y[idx_test], s) for s in TARGET_SHARES
             ],
