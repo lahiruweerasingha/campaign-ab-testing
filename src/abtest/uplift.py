@@ -82,9 +82,14 @@ def qini_permutation_p(
     random-targeting line by chance alone. Shuffling the scores keeps the
     customers, their arms and their outcomes, and breaks only the link between
     score and customer, so the shuffled coefficients show what chance produces.
-    Returns a one-sided p-value with the usual +1 correction.
+    Returns a one-sided p-value with the usual +1 correction, or NaN when the
+    coefficient itself is undefined (no overall incremental gain).
     """
     observed = qini_coefficient(scores, treated, y)
+    if np.isnan(observed):
+        # Without this, every NaN >= NaN comparison is False and the result
+        # would be the smallest possible p: a false "significant".
+        return float("nan")
     rng = np.random.default_rng(seed)
     scores = np.asarray(scores)
     hits = sum(qini_coefficient(rng.permutation(scores), treated, y) >= observed for _ in range(n))

@@ -2,4 +2,3 @@
 # a CRLF shebang fails with "bad interpreter: ^M".
 * text=auto eol=lf
 *.png binary
-*.ipynb text eol=lf

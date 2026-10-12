@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import sys
 from dataclasses import asdict
 from pathlib import Path
@@ -36,6 +37,7 @@ from abtest import stats as st  # noqa: E402
 from abtest import uplift as u  # noqa: E402
 
 TARGET_SHARES = (0.1, 0.3, 0.5)
+PERMUTATIONS = 1000
 
 
 def check_experiment(df) -> dict:
@@ -114,15 +116,22 @@ def uplift(df, arm: str, seed: int = 7) -> tuple[dict, dict]:
         scores = model.predict_uplift(X[idx_test])
         result[name] = {
             "qini_coefficient_test": u.qini_coefficient(scores, t[idx_test], y[idx_test]),
-            # Share of 1,000 random rankings of the same customers that score at
-            # least as high: is the curve above random by more than chance?
-            "qini_permutation_p": u.qini_permutation_p(scores, t[idx_test], y[idx_test]),
+            # How often a random ranking of the same customers scores at least
+            # as high: is the curve above random by more than chance?
+            "qini_permutation_p": u.qini_permutation_p(
+                scores, t[idx_test], y[idx_test], n=PERMUTATIONS
+            ),
             "targeting": [
                 u.targeting_value(scores, t[idx_test], y[idx_test], s) for s in TARGET_SHARES
             ],
         }
         curves[name] = u.qini_curve(scores, t[idx_test], y[idx_test])
-    return {"arm": arm, "test_customers": len(idx_test), "models": result}, curves
+    return {
+        "arm": arm,
+        "test_customers": len(idx_test),
+        "qini_permutations": PERMUTATIONS,
+        "models": result,
+    }, curves
 
 
 def plot_effects(eff: dict, path: Path, source: str) -> None:
@@ -192,9 +201,26 @@ def main() -> int:
         "power": pw,
         "uplift": upl,
     }
-    (out / "results.json").write_text(json.dumps(results, indent=2, default=float) + "\n")
-    print(json.dumps({"checks": experiment, "power": pw}, indent=2, default=float))
+    # allow_nan=False: an undefined value (e.g. a lift over a zero control rate)
+    # is written as null, never as NaN, which is not valid JSON.
+    (out / "results.json").write_text(
+        json.dumps(json_safe(results), indent=2, allow_nan=False) + "\n"
+    )
+    print(json.dumps(json_safe({"checks": experiment, "power": pw}), indent=2))
     return 0
+
+
+def json_safe(value):
+    """Plain JSON types: NumPy scalars unwrapped, NaN and infinity as None."""
+    if isinstance(value, dict):
+        return {k: json_safe(v) for k, v in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [json_safe(v) for v in value]
+    if isinstance(value, np.generic):
+        value = value.item()
+    if isinstance(value, float) and not math.isfinite(value):
+        return None
+    return value
 
 
 if __name__ == "__main__":
