@@ -13,19 +13,22 @@ The data is the Hillstrom (MineThatData, 2008) e-mail experiment. As its
 publisher describes it, 64,000 recent customers were randomly split into three
 equal arms (a men's merchandise e-mail, a women's merchandise e-mail, or no
 e-mail), and visits, purchases and spend were recorded for two weeks. The file
-is not redistributed here (no licence is stated); `make data` downloads it.
-The copy analysed had 64,000 rows and SHA-256 `0e589332…291aece`.
+is not redistributed here (no licence is stated); `make data` downloads it
+and checks it against the SHA-256 of the copy analysed here (64,000 rows):
+`0e5893329d8b93cefecc571777672028290ab69865718020c78c7284f291aece`.
 
 ## Results
 
 Full tables: [`evidence/hillstrom/RESULTS.md`](evidence/hillstrom/RESULTS.md).
 
 **The experiment is sound.** The arms hold 21,306 / 21,307 / 21,387 customers
-(sample-ratio mismatch test p = 0.904 against a 1/3 split), and no
-pre-treatment covariate differs between an e-mail arm and control by more than
-0.009 standard deviations.
+(sample-ratio mismatch test p = 0.904 against a 1/3 split), and none of the
+five numeric pre-treatment covariates (recency, past spend, past men's and
+women's purchases, new customer) differs between an e-mail arm and control by
+more than 0.009 standard deviations.
 
-**Both e-mails work, and the men's e-mail works better on every outcome.**
+**Both e-mails work, and the men's e-mail has the larger effect on every
+outcome.**
 Differences against no e-mail, with 95% intervals and Holm-adjusted p-values
 over all six comparisons:
 
@@ -39,9 +42,11 @@ over all six comparisons:
 
 The conversion intervals of the two e-mails do not overlap. Both are measured
 against the same control group, which makes non-overlap a conservative sign
-that the men's e-mail converts better. The experiment could detect a
-conversion lift of 0.224 points (80% power, 5% significance), and both
-e-mails clear it.
+that the men's e-mail converts better. For spend the intervals overlap, so
+the men's lead there is a point estimate only. The experiment could detect a
+conversion lift of 0.224 points (80% power, 5% significance). Both point
+estimates are above it, though the lower end of the women's interval (0.15)
+is not.
 
 **"For whom?" has no reliable answer in this data.** Uplift models trained on
 half the customers and scored on the other half:
@@ -53,8 +58,8 @@ half the customers and scored on the other half:
 | Women's | logistic T-learner | 0.168 | 0.053 | 0.97% | 0.32% |
 | Women's | gradient boosting T-learner | 0.176 | 0.042 | 0.34% | 0.32% |
 
-The Qini p is the share of 1,000 random rankings of the same held-out
-customers that score at least as high. For the men's e-mail the models do
+The Qini p is (k + 1) / 1,001, where k is how many of 1,000 random rankings
+of the same held-out customers score at least as high. For the men's e-mail the models do
 no better than random. For the women's e-mail the curves sit above random, but
 only at p = 0.04–0.05 before allowing for four model comparisons. The two
 models also disagree about whether the top 10% respond more (0.97% vs 0.34%).
@@ -115,7 +120,7 @@ flowchart LR
 
 1. **Is the experiment sound?** A chi-square sample-ratio mismatch test
    against the intended 1/3 split, and the standardised mean difference of
-   every pre-treatment covariate between each e-mail arm and control.
+   each numeric pre-treatment covariate between each e-mail arm and control.
 2. **What did each e-mail do?** Visit and conversion as differences in
    proportions (Wald interval, pooled z-test); spend as a difference in means
    with a bootstrap interval, because it is mostly zeros with a long tail.
@@ -138,10 +143,16 @@ flowchart LR
 
 ## Quickstart
 
-Requirements: Docker and GNU make.
+Requirements: Docker, GNU make, and `sh` and `curl` on the host for
+`make data` (all present in Git Bash, macOS and Linux).
+
+On Linux, the container writes `evidence/` as its `analyst` user (uid 1000).
+Docker Desktop on Windows and macOS maps this automatically; on a native
+Linux host with a different uid, make the folder writable first
+(`chmod -R a+w evidence`).
 
 ```bash
-make test             # 17 tests, expected values worked out by hand
+make test             # 23 tests, expected values worked out by hand
 make synthetic-check  # the planted-effect check above -> evidence/synthetic_check/
 make data             # download the Hillstrom CSV into data/ (about 4 MB)
 make run              # analyse it -> evidence/hillstrom/

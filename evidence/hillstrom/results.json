@@ -103,6 +103,7 @@
     "Mens E-Mail": {
       "arm": "Mens E-Mail",
       "test_customers": 21307,
+      "qini_permutations": 1000,
       "models": {
         "logistic T-learner": {
           "qini_coefficient_test": -0.07347339154855148,
@@ -157,6 +158,7 @@
     "Womens E-Mail": {
       "arm": "Womens E-Mail",
       "test_customers": 21347,
+      "qini_permutations": 1000,
       "models": {
         "logistic T-learner": {
           "qini_coefficient_test": 0.16753420030864374,

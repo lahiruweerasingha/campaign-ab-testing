@@ -30,11 +30,12 @@ With 21,306 customers per arm and a 0.57% control conversion rate, the smallest 
 
 ## 4. For whom? Uplift on the held-out half
 
-Qini p: the share of 1,000 random rankings of the same held-out customers
-that reach at least the model's Qini coefficient. A large p means the curve
-is above the random line by no more than chance would put it there.
+Qini p: (k + 1) / (1,000 + 1), where k is how many of 1,000 random rankings
+of the same held-out customers reach at least the model's Qini coefficient. A
+large p means the curve is above the random line by no more than chance would
+put it there.
 
-| E-mail | Model | Qini coefficient | Qini p | Uplift if top 10% targeted | top 30% | top 50% | Average uplift |
+| E-mail | Model | Qini coefficient | Qini p | Uplift if top 10% targeted | Uplift if top 30% targeted | Uplift if top 50% targeted | Average uplift |
 |---|---|---:|---:|---:|---:|---:|---:|
 | Mens E-Mail | logistic T-learner | -0.073 | 0.899 | 0.57% | 0.61% | 0.48% | 0.69% |
 | Mens E-Mail | gradient boosting T-learner | -0.024 | 0.664 | 0.15% | 0.70% | 0.59% | 0.69% |

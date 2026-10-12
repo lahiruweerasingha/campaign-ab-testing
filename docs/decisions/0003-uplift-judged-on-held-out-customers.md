@@ -23,8 +23,9 @@ cannot be scored row by row the way a classifier can.
   (incremental conversions when targeting the highest predicted uplift first),
   its coefficient relative to random targeting, and the **measured** effect
   (treated rate minus control rate) among the top 10%, 30% and 50%.
-- A **permutation test** of the Qini coefficient: the share of 1,000 random
-  rankings of the same held-out customers that score at least as high. Added
+- A **permutation test** of the Qini coefficient: (k + 1) / 1,001, where k
+  is how many of 1,000 random rankings of the same held-out customers score
+  at least as high. Added
   after the first real-data run, where a Qini of 0.18 looked convincing on
   its own but rested on about 34 incremental conversions.
 

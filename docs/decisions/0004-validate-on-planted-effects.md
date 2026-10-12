@@ -14,7 +14,7 @@ numbers that nobody can check.
 and known effects: a uniform +0.4-point conversion lift from the men's e-mail,
 and a +1.2-point lift from the women's e-mail **only** for customers with past
 women's purchases. `make synthetic-check` runs the full pipeline on it, and CI
-runs the same pipeline on every push.
+runs the same pipeline on every push to main and every pull request.
 
 ## Result
 

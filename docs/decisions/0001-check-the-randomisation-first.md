@@ -15,7 +15,7 @@ Before any effect is computed, `run_analysis.py` reports:
 
 - a **sample-ratio mismatch** test: a chi-square test of the arm sizes against
   the intended 1/3 split;
-- the **standardised mean difference** of every pre-treatment covariate
+- the **standardised mean difference** of each numeric pre-treatment covariate
   (recency, past spend, past men's and women's purchases, new customer)
   between each e-mail arm and control, with |SMD| < 0.1 read as balanced.
 
