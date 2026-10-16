@@ -7,8 +7,6 @@ correction, state what the experiment was large enough to detect, then ask
 **for whom** the e-mail works, using uplift models judged on held-out
 customers.
 
-Originally developed as part of my MSc Data Science at Coventry University, then extended into a standalone project.
-
 The data is the Hillstrom (MineThatData, 2008) e-mail experiment. As its
 publisher describes it, 64,000 recent customers were randomly split into three
 equal arms (a men's merchandise e-mail, a women's merchandise e-mail, or no
